@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.example.myapplication.databinding.ActivityMainBinding
@@ -16,24 +17,33 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
        //setContentView(R.layout.activity_main)
       binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-        binding.progressBar.visibility = View.GONE
-       binding.btSubmit.setOnClickListener{
-           progressbar()
-       }
+
+        binding.btSubmit.setOnClickListener {
+            getStudent(Student(id = 1, name = "Amit Bidlan", email = "B@gmail.com"))
+        }
+
+
     }
 
-private fun progressbar(){
-     binding.apply {
-         if (isclicked){
+private fun getStudent(student: Student): Student? {
+    binding.apply {
+        if (isclicked) {
+
+            tvName.setText(student?.name)
+            tvEmail.setText(student?.email)
+            progressBar.visibility = View.GONE
+            isclicked = false
+            btSubmit.setText("Clear")
+        } else {
+            tvName.setText("")
+            tvEmail.setText("")
             progressBar.visibility = View.VISIBLE
-             btSubmit.setText("Stop")
-             isclicked = false
-         }else{
-             progressBar.visibility = View.GONE
-             btSubmit.setText("Start")
-             isclicked = true
-         }
-     }
+            isclicked = true
+            btSubmit.setText("Fetch")
+        }
+    }
+    return null
+
 }
 
 
